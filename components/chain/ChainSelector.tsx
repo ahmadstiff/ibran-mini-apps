@@ -36,12 +36,12 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
       <div className="flex-1 w-full">
         <div className="text-xs text-gray-300 mb-2 font-medium">From</div>
         {fromChain && (
-          <div className="flex items-center gap-3 bg-gradient-to-r from-gray-800 to-gray-700 rounded-xl px-4 py-3 border border-gray-600/50 shadow-sm hover:border-blue-400/60 transition-all duration-200">
+          <div className="flex items-center gap-3 bg-slate-800/30 rounded-xl px-4 py-3 border border-gray-600/50 shadow-sm hover:border-blue-400/60 transition-all duration-200">
             <Image
               src={fromChain.logo}
               alt={fromChain.name}
-              width={28}
-              height={28}
+              width={24}
+              height={24}
               className="rounded-full ring-2 ring-blue-500/20"
             />
             <span className="text-white font-semibold text-sm">
@@ -56,7 +56,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
           value={toChainId}
           onValueChange={(value) => setToChainId(value)}
         >
-          <SelectTrigger className="w-full bg-gradient-to-r py-7 from-gray-800 to-gray-700 border border-gray-600/50 hover:border-blue-400/60 text-gray-100 rounded-xl shadow-sm transition-all duration-200 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400">
+          <SelectTrigger className="w-full bg-slate-800/30 py-6  border border-gray-600/50 hover:border-blue-400/60 text-gray-100 rounded-xl shadow-sm transition-all duration-200 focus:ring-1 focus:ring-blue-500/30 focus:border-blue-400">
             <SelectValue
               placeholder="Select destination chain"
               className="text-gray-200 "

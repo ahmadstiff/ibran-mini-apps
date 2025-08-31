@@ -78,9 +78,8 @@ const MobileView = () => {
           <CardContent className="p-4">
             <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-center">
-                <div className="flex items-center gap-3">
-                  <div className="text-xl">💰</div>
-                  <h2 className="text-lg font-bold text-white">Lending Pool</h2>
+                <div className="flex items-center ">
+                  <h2 className="text-lg font-bold  text-white">Lending Pool</h2>
                 </div>
               </div>
               <div className="w-full">
@@ -130,7 +129,7 @@ const MobileView = () => {
                   {pools.map((pool) => (
                     <Card
                       key={pool.id}
-                      className="bg-gray-800 text-gray-100 shadow-lg border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors"
+                      className="bg-slate-800/30 text-gray-100 shadow-lg border border-blue-400/30 cursor-pointer hover:bg-gray-700 transition-colors"
                       onClick={() => handleOpenDetails(pool)}
                     >
                       <CardContent className="p-3 space-y-3">

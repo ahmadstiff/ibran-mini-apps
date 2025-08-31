@@ -792,7 +792,7 @@ export function ActionModalView({ type, market, onAction }: ActionModalViewProps
     <div className="space-y-6">
       {/* Simple Wallet Connection Check */}
       {!isConnected ? (
-                <div className="bg-gradient-to-br from-slate-800/80 to-slate-700/60 border border-slate-600/50 rounded-xl p-6 shadow-xl backdrop-blur-sm">
+                <div className="bg-slate-800/80 border border-slate-600/50 rounded-xl p-6 shadow-xl backdrop-blur-sm">
           <div className="text-center space-y-4">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-blue-500/20">
               <AlertTriangle className="w-6 h-6 text-blue-400" />
@@ -904,7 +904,7 @@ export function ActionModalView({ type, market, onAction }: ActionModalViewProps
             <div className="relative">
               <Input
                 placeholder={type === "repay" ? "Enter amount to repay..." : "0.0"}
-                className={`w-full bg-gradient-to-br from-slate-800/80 to-slate-700/60 border transition-all duration-200 mt-2 rounded-xl px-4 py-3 pr-24 backdrop-blur-sm ${
+                className={`w-full bg-slate-800/80 border transition-all duration-200 mt-2 rounded-xl px-4 py-3 pr-24 backdrop-blur-sm ${
                   type === "repay"
                     ? "border-blue-600/50 hover:border-blue-400/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30"
                     : "border-slate-600/50 hover:border-blue-400/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30"

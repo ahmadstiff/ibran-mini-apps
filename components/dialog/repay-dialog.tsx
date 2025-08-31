@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowUpCircle, AlertTriangle, ArrowDownUp } from "lucide-react";
+import { ArrowUpCircle, AlertTriangle, ArrowDownUp, ArrowDownCircle } from "lucide-react";
 import { EnrichedPool } from "@/lib/pair-token-address";
 import { useRepay } from "@/hooks/write/useRepaySelectedToken";
 import { toast } from "sonner";
@@ -341,8 +341,8 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl rounded-xl p-4 md:p-6 w-full max-w-2xl mx-4 border border-slate-700/50 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-slate-900/80 backdrop-blur-xl rounded-xl p-4 md:p-6 w-full max-w-2xl mx-4 border border-slate-700/50 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-full flex items-center justify-center shadow-lg shadow-green-500/20">
@@ -369,7 +369,7 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
         ) : (
           <>
             {/* Market Info */}
-            <div className="mb-6 p-4 bg-gradient-to-br from-slate-800/80 to-slate-700/60 rounded-xl border border-slate-600/50 shadow-lg backdrop-blur-sm">
+            <div className="mb-6 p-4 bg-slate-800/30 rounded-xl border border-slate-600/50 shadow-lg backdrop-blur-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-slate-400 text-sm">Pool</span>
                 <span className="text-slate-100 font-medium">
@@ -389,16 +389,15 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
             </div>
 
             {/* Exchange Rate Display */}
-            <div className="mb-4 p-4 bg-gradient-to-br from-blue-900/30 to-blue-800/20 border border-blue-500/40 rounded-xl shadow-lg backdrop-blur-sm">
+            <div className="mb-4 p-3 xl:p-2 bg-slate-800/30 border border-slate-600/50 rounded-xl shadow-lg backdrop-blur-sm">
+                  <div className="text-sm text-slate-400 pb-2">Exchange rate</div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-blue-300">
-                  <ArrowDownUp className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs text-slate-100">
                   <span className="text-sm">{getDynamicExchangeRate()}</span>
                   {(isLoadingInputToBorrow || isLoadingBorrowToInput || isLoadingBaseRate) && (
                     <Spinner size="sm" className="text-blue-400" />
                   )}
                 </div>
-                <div className="text-xs text-slate-400">Using token calculator</div>
               </div>
             </div>
 
@@ -415,7 +414,7 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
                     value={inputTokenAmount}
                     onChange={(e) => handleInputTokenAmountChange(e.target.value)}
                     placeholder="0.00"
-                    className="bg-gradient-to-br from-slate-800/80 to-slate-700/60 border-slate-600/50 hover:border-blue-500/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30 text-slate-100 placeholder:text-slate-400 backdrop-blur-sm shadow-lg"
+                    className="bg-slate-800/30 border-slate-600/50 hover:border-blue-500/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30 text-slate-100 placeholder:text-slate-400 backdrop-blur-sm shadow-lg"
                     disabled={isRepaying || isRepayLoading}
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-slate-400 font-medium">
@@ -429,8 +428,8 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
 
               {/* Conversion Arrow */}
               <div className="flex justify-center">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20">
-                  <ArrowDownUp className="w-4 h-4 text-blue-400" />
+                <div className="bg-transparent rounded-full flex items-center justify-center shadow-lg">
+                  <ArrowDownCircle className="w-8 h-8 text-blue-900" />
                 </div>
               </div>
 
@@ -445,7 +444,7 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
                     value={borrowTokenAmount}
                     onChange={(e) => handleBorrowTokenAmountChange(e.target.value)}
                     placeholder="0.00"
-                    className="bg-gradient-to-br from-slate-800/80 to-slate-700/60 border-slate-600/50 hover:border-blue-500/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30 text-slate-100 placeholder:text-slate-400 backdrop-blur-sm shadow-lg pr-16"
+                    className="bg-slate-800/30 border-slate-600/50 hover:border-blue-500/60 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30 text-slate-100 placeholder:text-slate-400 backdrop-blur-sm shadow-lg pr-16"
                     disabled={isRepaying || isRepayLoading}
                   />
                   <Button
@@ -489,7 +488,7 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
             <Button
               onClick={handleRepayPress}
               disabled={isButtonDisabled()}
-              className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl shadow-xl transition-all duration-200 backdrop-blur-sm"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl shadow-xl transition-all duration-200 backdrop-blur-sm"
             >
               {isRepaying || isRepayLoading ? (
                 <Spinner size="sm" className="mr-2" />

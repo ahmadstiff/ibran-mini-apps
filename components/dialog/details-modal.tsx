@@ -77,7 +77,7 @@ export const DetailsModal = ({ open, onClose, market }: DetailsModalProps) => {
         }
       }}
     >
-      <DialogContent className="max-w-lg sm:max-w-xl md:max-w-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-xl md:max-w-2xl rounded-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
             {market.borrowTokenInfo?.symbol || market.borrowToken} /{" "}
@@ -92,10 +92,10 @@ export const DetailsModal = ({ open, onClose, market }: DetailsModalProps) => {
               value={selectedAction}
               onValueChange={(value) => setSelectedAction(value as Action)}
             >
-              <SelectTrigger className="w-full bg-gradient-to-br from-slate-800/80 to-slate-700/60 border-slate-600/50 hover:border-blue-500/60 text-slate-100 rounded-xl px-4 py-3 shadow-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 backdrop-blur-sm">
+              <SelectTrigger className="w-full bg-slate-800/80  border-slate-600/50 hover:border-blue-500/60 text-slate-100 rounded-xl px-4 py-3 shadow-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 backdrop-blur-sm">
                 <SelectValue placeholder="Select an action" />
               </SelectTrigger>
-              <SelectContent className="bg-gradient-to-br from-slate-800/95 to-slate-700/90 text-white border border-slate-600/50 rounded-xl shadow-2xl z-[1000] max-h-60 backdrop-blur-xl">
+              <SelectContent className="bg-slate-800/95 text-white border border-slate-600/50 rounded-xl shadow-2xl z-[1000] max-h-60 backdrop-blur-xl">
                 {actions.map((action) => (
                   <SelectItem key={action.value} value={action.value} className="hover:bg-slate-700/80 focus:bg-slate-700/80 rounded-lg mx-1 my-0.5 transition-colors duration-150">
                     {action.label}

@@ -87,7 +87,6 @@ const DesktopView = () => {
           <CardContent className="px-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="text-2xl">💰</div>
                 <h2 className="text-xl font-bold text-white">Lending Pool</h2>
               </div>
               <motion.div
