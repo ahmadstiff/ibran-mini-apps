@@ -88,7 +88,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
             <Button
               onClick={onRefresh}
               disabled={loading}
-              className="flex-1 sm:flex-none bg-gradient-to-r from-blue-600/90 to-purple-600/90 hover:from-blue-600 hover:to-purple-600 border border-blue-500/40 hover:border-blue-400/60 transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-blue-500/25 text-white font-medium px-6 py-2 h-10"
+              className="bg-transparent text-blue-300 border border-cyan-800 hover:border-cyan-500 hover:bg-cyan-800/20 hover:text-blue-200 font-medium px-6 py-2 h-10"
             >
               {loading ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

@@ -58,9 +58,9 @@ const MobileNavbarTelegram = () => {
       <div className="h-20" />
 
       {/* Bottom Navigation Bar - Fixed di bawah */}
-      <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 max-w-2xl w-full z-50 bg-gray-950/95 backdrop-blur-xl border-t border-cyan-500/30 shadow-[0_-10px_40px_rgba(6,182,212,0.15)]">
+      <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 max-w-2xl w-full z-50 bg-gray-950/95 border-t rounded-t-xl border-cyan-500/30 ">
         {/* Glow effect line di atas */}
-        <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-30" />
+        <div className="absolute -top-px left-0 right-0 h-px" />
 
         <div className="relative px-4 py-2 safe-area-pb">
           <div className="grid grid-cols-4">
@@ -99,7 +99,7 @@ const MobileNavbarTelegram = () => {
                     {/* Glow Effect untuk icon aktif */}
                     {isActive && (
                       <div
-                        className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-xl opacity-40 animate-pulse"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full blur-sm opacity-10 "
                       />
                     )}
 
@@ -107,7 +107,7 @@ const MobileNavbarTelegram = () => {
                     <div
                       className={`relative p-2.5 rounded-full transition-all duration-300 ${
                         isActive
-                          ? "shadow-lg shadow-blue-500/25"
+                          ? "shadow-md shadow-blue-500/25"
                           : "bg-gray-800/50 hover:bg-gray-800"
                       }`}
                     >
@@ -115,7 +115,7 @@ const MobileNavbarTelegram = () => {
                         size={22}
                         className={`transition-all duration-300 ${
                           isActive
-                            ? "text-blue-400 drop-shadow-lg"
+                            ? "text-blue-400 shadow-md"
                             : "text-gray-400 hover:text-gray-300"
                         }`}
                         strokeWidth={isActive ? 2.5 : 2}
@@ -146,19 +146,19 @@ const MobileNavbarTelegram = () => {
                 <div className="relative flex items-center justify-center mb-1">
                   {/* Glow Effect untuk wallet connected */}
                   {isConnected && (
-                    <div className="absolute inset-0 bg-gray-800/50 rounded-full  opacity-40 animate-pulse" />
+                    <div className="absolute inset-0 bg-gray-800/50 hover:bg-gray-800 rounded-full  opacity-40 animate-pulse" />
                   )}
                   
                   <div className={`relative p-2.5 rounded-full transition-all duration-300 ${
                     isConnected 
-                      ? "drop-shadow-lg" 
+                      ? "drop-shadow-lg bg-gray-800/50 hover:bg-gray-800" 
                       : "bg-gray-800/50 hover:bg-gray-800"
                   }`}>
                     <User
                       size={22}
                       className={`transition-all duration-300 ${
                         isConnected
-                          ? "text-blue-400 drop-shadow-lg"
+                          ? "text-gray-400 drop-shadow-lg"
                           : "text-red-400 hover:text-red-300"
                       }`}
                       strokeWidth={isConnected ? 2.5 : 2}
@@ -167,10 +167,10 @@ const MobileNavbarTelegram = () => {
                 </div>
                 <span className={`text-xs font-medium transition-all duration-300 mt-1 ${
                   isConnected
-                    ? "text-blue-400  font-semibold"
+                    ? "text-green-400 "
                     : "text-red-500 hover:text-red-400"
                 }`}>
-                  {isConnected ? "Wallet" : "Connect"}
+                  {isConnected ? "User" : "User"}
                 </span>
               </button>
             </div>
@@ -178,7 +178,7 @@ const MobileNavbarTelegram = () => {
         </div>
 
         {/* Extra shadow untuk depth */}
-        <div className="absolute inset-x-0 -top-4 h-4 bg-gradient-to-t from-gray-950/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 -top-4 h-4 pointer-events-none" />
       </nav>
 
       {/* Wallet Connect Popup */}
@@ -210,8 +210,8 @@ const MobileNavbarTelegram = () => {
 
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/25">
-                <User className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 mx-auto mb-4 bg-transparent border-2 border-blue-800 rounded-full flex items-center justify-center">
+                <User className="w-8 h-8 text-blue-800" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Connect Wallet</h3>
               <p className="text-gray-400 text-sm">
@@ -220,24 +220,20 @@ const MobileNavbarTelegram = () => {
             </div>
 
             {/* Wallet Connection */}
-            <div className="space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-4">
               {isConnected ? (
-                <div className="text-center">
-                  <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-4">
-                    <div className="text-blue-400 text-sm font-medium">✓ Wallet Connected</div>
+                <div className="flex flex-col items-center justify-center w-full">
+                  <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-4 w-full hover:bg-blue-500/30 cursor-pointer">
+                    <div className="text-blue-400 text-sm font-medium text-center">Wallet Connected</div>
                   </div>
-                  <ConnectButton />
+                  <div className="w-full flex justify-center">
+                    <ConnectButton />
+                  </div>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  <ConnectButton />
-                  
-                  {/* Alternative connection methods */}
-                  <div className="text-center">
-                    <div className="text-gray-400 text-xs mb-2">or</div>
-                    <button className="w-full py-3 px-4 bg-gray-800 hover:bg-blue-800 text-white rounded-lg transition-colors text-sm font-medium">
-                      Connect with QR Code
-                    </button>
+                <div className="flex flex-col items-center justify-center w-full">
+                  <div className="w-full flex justify-center">
+                    <ConnectButton />
                   </div>
                 </div>
               )}

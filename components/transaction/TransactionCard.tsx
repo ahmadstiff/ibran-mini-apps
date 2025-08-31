@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   ExternalLink,
   CheckCircle,
-  Clock,
   Hash,
   Calendar,
   Building,
@@ -139,7 +138,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
             </div>
 
             {/* Transaction Details */}
-            <div className="flex-1 space-y-3 sm:space-y-4 min-w-0">
+            <div className="flex-1 space-y-2 min-w-0">
               {/* Header with Enhanced Styling */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 gap-2">
                 <h3 className="font-bold text-base sm:text-lg bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent drop-shadow-sm truncate">
@@ -155,8 +154,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
                     <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-gray-500 uppercase tracking-wider">Time</div>
-                    <div className="text-white text-xs sm:text-sm truncate">
+                    <div className="text-xs text-gray-500 uppercase tracking-wider">Transaction Time</div>
+                    <div className="text-white text-xs lg:text-sm truncate">
                       {formatTimestamp(transaction.timestamp)}
                     </div>
                   </div>
@@ -177,8 +176,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-gray-500 uppercase tracking-wider">Hash</div>
-                    <div className="text-white font-mono text-xs sm:text-sm truncate">
+                    <div className="text-xs text-gray-500 uppercase tracking-wider">Transaction Hash</div>
+                    <div className="text-white font-mono text-xs lg:text-sm truncate">
                       {transaction.transactionHash}
                     </div>
                   </div>
@@ -189,8 +188,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
                     <Building className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-400" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-gray-500 uppercase tracking-wider">Pool</div>
-                    <div className="text-white font-mono text-xs sm:text-sm truncate">
+                    <div className="text-xs text-gray-500 uppercase tracking-wider">Pool Address</div>
+                    <div className="text-white font-mono text-xs lg:text-sm truncate">
                       {transaction.pool.id}
                     </div>
                   </div>
@@ -207,7 +206,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
               className="bg-transparent text-blue-300 border border-cyan-800 hover:border-cyan-500 hover:bg-cyan-800/20 hover:text-blue-200 transition-all duration-300 w-full sm:w-auto"
             >
               <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="text-xs sm:text-sm">View</span>
+              <span className="text-xs sm:text-sm">View on Explorer</span>
             </Button>
           </div>
         </div>
