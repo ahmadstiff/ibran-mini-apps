@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, ArrowLeftRight, Wallet, History, User } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Wallet, History, User, Wallet2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -154,7 +154,7 @@ const MobileNavbarTelegram = () => {
                       ? "drop-shadow-lg bg-gray-800/50 hover:bg-gray-800" 
                       : "bg-gray-800/50 hover:bg-gray-800"
                   }`}>
-                    <User
+                    <Wallet2
                       size={22}
                       className={`transition-all duration-300 ${
                         isConnected
@@ -167,10 +167,10 @@ const MobileNavbarTelegram = () => {
                 </div>
                 <span className={`text-xs font-medium transition-all duration-300 mt-1 ${
                   isConnected
-                    ? "text-green-400 "
+                    ? "text-gray-400 "
                     : "text-red-500 hover:text-red-400"
                 }`}>
-                  {isConnected ? "User" : "User"}
+                  {isConnected ? "Connected" : "Disconnected"}
                 </span>
               </button>
             </div>
@@ -211,7 +211,7 @@ const MobileNavbarTelegram = () => {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="w-16 h-16 mx-auto mb-4 bg-transparent border-2 border-blue-800 rounded-full flex items-center justify-center">
-                <User className="w-8 h-8 text-blue-800" />
+                <Wallet2 className="w-8 h-8 text-blue-800" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Connect Wallet</h3>
               <p className="text-gray-400 text-sm">
