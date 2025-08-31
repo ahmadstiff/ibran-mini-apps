@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Funnel, RefreshCw, Loader2, BarChart3, TrendingUp, Wallet, Clock } from "lucide-react";
+import { Funnel, RefreshCw, Loader2, BarChart3, TrendingUp, Wallet, Clock, BarChart2 } from "lucide-react";
 
 interface HistoryFiltersProps {
   filterType: string;
@@ -24,7 +24,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
   loading,
 }) => {
   return (
-    <Card className="bg-gradient-to-br from-gray-900/90 to-gray-900/90 border border-gray-700/60 backdrop-blur-md shadow-xl">
+    <Card className="bg-gray-900 text-gray-100 shadow-xl border border-cyan-800">
       <CardContent className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Filter Section */}
@@ -37,41 +37,41 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
             {/* Type Filter */}
             <div className="w-full sm:w-64">
               <Select value={filterType} onValueChange={onFilterTypeChange}>
-                <SelectTrigger className="w-full bg-gradient-to-r from-gray-800/60 to-gray-700/60 border border-gray-600/60 text-white hover:border-gray-500/80 transition-all duration-300 backdrop-blur-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-400/60">
+                <SelectTrigger className="w-full bg-gray-800 border border-cyan-800 text-gray-100 hover:border-cyan-700 transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-600">
                   <SelectValue placeholder="Select transaction type" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-800/95 text-white border-gray-600 backdrop-blur-sm max-h-60">
-                  <SelectItem value="all" className="hover:bg-gray-700/50">
+                <SelectContent className="bg-gray-800 text-gray-100 border border-cyan-800 backdrop-blur-sm max-h-60">
+                  <SelectItem value="all" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
                       <BarChart3 className="w-4 h-4" />
                       All Types
                     </div>
                   </SelectItem>
-                  <SelectItem value="supply_liquidity" className="hover:bg-gray-700/50">
+                  <SelectItem value="supply_liquidity" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-4 h-4 text-green-400" />
                       Supply Liquidity
                     </div>
                   </SelectItem>
-                  <SelectItem value="withdraw_liquidity" className="hover:bg-gray-700/50">
+                  <SelectItem value="withdraw_liquidity" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-4 h-4 text-red-400" />
                       Withdraw Liquidity
                     </div>
                   </SelectItem>
-                  <SelectItem value="borrow_debt" className="hover:bg-gray-700/50">
+                  <SelectItem value="borrow_debt" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
                       <Wallet className="w-4 h-4 text-yellow-400" />
                       Borrow Debt
                     </div>
                   </SelectItem>
-                  <SelectItem value="repay_collateral" className="hover:bg-gray-700/50">
+                  <SelectItem value="repay_collateral" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-blue-400" />
+                    <BarChart2 className="w-4 h-4 text-purple-400" />
                       Repay Collateral
                     </div>
                   </SelectItem>
-                  <SelectItem value="supply_collateral" className="hover:bg-gray-700/50">
+                  <SelectItem value="supply_collateral" className="hover:bg-gray-700 focus:bg-gray-700">
                     <div className="flex items-center gap-2">
                       <BarChart3 className="w-4 h-4 text-purple-400" />
                       Supply Collateral

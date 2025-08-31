@@ -25,13 +25,13 @@ const HistoryPagination: React.FC<HistoryPaginationProps> = ({
         onClick={onPrevPage}
         disabled={currentPage === 1}
         variant="outline"
-        className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 border border-gray-600/50 text-gray-300 hover:from-gray-700/50 hover:to-gray-600/50 hover:border-gray-500/70 hover:text-white disabled:opacity-50 transition-all duration-300 backdrop-blur-sm"
+        className="bg-gray-800 border border-cyan-800 text-gray-300 hover:bg-gray-700 hover:border-cyan-700 hover:text-white disabled:opacity-50 transition-all duration-300"
       >
         <ChevronLeft className="w-4 h-4 mr-2" />
         Previous
       </Button>
 
-      <div className="bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 py-2 rounded-lg border border-gray-600/30 backdrop-blur-sm">
+      <div className="bg-gray-800 px-4 py-2 rounded-lg border border-cyan-800">
         <span className="text-gray-300 font-medium">
           Page {currentPage} of {totalPages}
         </span>
@@ -41,7 +41,7 @@ const HistoryPagination: React.FC<HistoryPaginationProps> = ({
         onClick={onNextPage}
         disabled={currentPage === totalPages}
         variant="outline"
-        className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 border border-gray-600/50 text-gray-300 hover:from-gray-700/50 hover:to-gray-600/50 hover:border-gray-500/70 hover:text-white disabled:opacity-50 transition-all duration-300 backdrop-blur-sm"
+        className="bg-gray-800 border border-cyan-800 text-gray-300 hover:bg-gray-700 hover:border-cyan-700 hover:text-white disabled:opacity-50 transition-all duration-300"
       >
         Next
         <ChevronRight className="w-4 h-4 ml-2" />

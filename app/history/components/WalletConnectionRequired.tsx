@@ -7,7 +7,7 @@ const WalletConnectionRequired: React.FC = () => {
       <div className="mx-auto max-w-4xl space-y-8 mt-5">
         <div className="text-center space-y-6">
           <div className="flex justify-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <div className="w-20 h-20 bg-gray-800 border border-cyan-800 rounded-full flex items-center justify-center">
               <Wallet className="w-10 h-10 text-white" />
             </div>
           </div>

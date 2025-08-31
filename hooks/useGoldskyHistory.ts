@@ -69,7 +69,7 @@ export const useGoldskyHistory = ({
 
   // Goldsky API configuration - using the actual endpoint
   const GOLDSKY_ENDPOINT =
-    "https://api.goldsky.com/api/public/project_cmds16kqrb8ra01wo4vdr7g5u/subgraphs/lending-pool-subgraph/1.0.2/gn";
+    "https://api.goldsky.com/api/public/project_cmds16kqrb8ra01wo4vdr7g5u/subgraphs/my-supgraph/1.1/gn";
 
   const fetchTransactions = useCallback(
     async (page: number = 1, append: boolean = false) => {

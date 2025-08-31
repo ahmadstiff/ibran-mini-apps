@@ -1,5 +1,5 @@
 import "./theme.css";
-import "@coinbase/onchainkit/styles.css";
+import '@rainbow-me/rainbowkit/styles.css';
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -51,7 +51,7 @@ export default function RootLayout({
           <Toaster />
           <div className="mx-2">
             <div className="relative flex flex-col h-screen">
-              <main className="container mx-auto max-w-md pt-8 flex-grow pb-20">{children}</main>
+              <main className="container mx-auto max-w-2xl pt-8 flex-grow pb-20">{children}</main>
             </div>
             <MobileNavbarTelegram />
           </div>

@@ -5,8 +5,6 @@ import { useGoldskyHistory, Transaction } from "@/hooks/useGoldskyHistory";
 import { TransactionCard } from "@/components/transaction/TransactionCard";
 import {
   HistoryHeader,
-  HistoryStats,
-  TransactionTypeBreakdown,
   HistoryFilters,
   HistoryPagination,
   HistoryEmptyState,
@@ -17,14 +15,26 @@ import { useAccount } from "wagmi";
 
 const HistoryPage: React.FC = () => {
   const { address, isConnected } = useAccount();
+  const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("timestamp");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { transactions, loading, error, hasMore, fetchTransactions, refreshTransactions } =
-    useGoldskyHistory({ pageSize: 10, autoFetch: isConnected && !!address });
+  // Prevent hydration mismatch by only rendering after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { 
+    transactions, 
+    loading, 
+    error, 
+    hasMore, 
+    fetchTransactions,
+    refreshTransactions 
+  } = useGoldskyHistory({ pageSize: 10, autoFetch: isConnected && !!address });
 
   // Filter and sort transactions
   const filteredAndSortedTransactions = useMemo(() => {
@@ -100,7 +110,9 @@ const HistoryPage: React.FC = () => {
   };
 
   const handleLoadMore = () => {
-    fetchTransactions(Math.ceil(transactions.length / 10) + 1, true);
+    if (hasMore) {
+      fetchTransactions(currentPage + 1, true);
+    }
   };
 
   const handlePrevPage = () => {
@@ -120,22 +132,21 @@ const HistoryPage: React.FC = () => {
     setCurrentPage(1);
   }, [searchTerm, filterStatus, filterType, sortBy]);
 
+  // Don't render anything until mounted to prevent hydration issues
+  if (!mounted) {
+    return null;
+  }
+
   // Show wallet connection required message
   if (!isConnected || !address) {
     return <WalletConnectionRequired />;
   }
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen mb-40">
       <div className="mx-auto max-w-7xl space-y-8 mt-5">
         {/* Header */}
         <HistoryHeader />
-
-        {/* Statistics */}
-        <HistoryStats stats={stats} />
-
-        {/* Transaction Type Breakdown */}
-        <TransactionTypeBreakdown typeBreakdown={stats.typeBreakdown} />
 
         {/* Filters */}
         <HistoryFilters
@@ -147,7 +158,17 @@ const HistoryPage: React.FC = () => {
 
         {/* Transactions List */}
         <div className="space-y-4">
-          {loading && transactions.length === 0 ? (
+          {error ? (
+            <div className="text-center py-8">
+              <p className="text-red-500 mb-4">{error}</p>
+              <button
+                onClick={refreshTransactions}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Retry
+              </button>
+            </div>
+          ) : loading && transactions.length === 0 ? (
             <HistoryLoadingState />
           ) : currentTransactions.length === 0 ? (
             <HistoryEmptyState />
@@ -156,6 +177,19 @@ const HistoryPage: React.FC = () => {
               {currentTransactions.map((tx: Transaction) => (
                 <TransactionCard key={tx.id} transaction={tx} />
               ))}
+
+              {/* Load More Button for Infinite Scroll */}
+              {hasMore && (
+                <div className="flex justify-center pt-6">
+                  <button
+                    onClick={handleLoadMore}
+                    disabled={loading}
+                    className="px-6 py-3 bg-cyan-800 hover:bg-cyan-800/80 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? "Loading..." : "Load More"}
+                  </button>
+                </div>
+              )}
 
               {/* Pagination */}
               <HistoryPagination
