@@ -1,0 +1,61 @@
+export const positionAbi = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  { inputs: [], name: "ChainAlreadyExists", type: "error" },
+  { inputs: [], name: "NotOwner", type: "error" },
+  { inputs: [], name: "TokenAlreadyExists", type: "error" },
+  { inputs: [], name: "TokenNotExists", type: "error" },
+  {
+    outputs: [],
+    inputs: [
+      { name: "_mailbox", internalType: "address", type: "address" },
+      { name: "_gasMaster", internalType: "address", type: "address" },
+      { name: "_domainId", internalType: "uint32", type: "uint32" },
+      { name: "_chainId", internalType: "uint256", type: "uint256" },
+    ],
+    name: "addChain",
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    outputs: [],
+    inputs: [
+      { name: "_chainId", internalType: "uint256", type: "uint256" },
+      { name: "_receiverBridge", internalType: "address", type: "address" },
+    ],
+    name: "addReceiverBridge",
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
+    inputs: [],
+    name: "chainId",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    outputs: [
+      { name: "mailbox", internalType: "address", type: "address" },
+      { name: "gasMaster", internalType: "address", type: "address" },
+      { name: "domainId", internalType: "uint32", type: "uint32" },
+    ],
+    inputs: [{ name: "", internalType: "uint256", type: "uint256" }],
+    name: "chains",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    outputs: [{ name: "", internalType: "address", type: "address" }],
+    inputs: [],
+    name: "owner",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    outputs: [{ name: "", internalType: "address", type: "address" }],
+    inputs: [{ name: "", internalType: "uint256", type: "uint256" }],
+    name: "receiverBridge",
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
