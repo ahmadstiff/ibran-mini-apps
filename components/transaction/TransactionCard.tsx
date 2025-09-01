@@ -12,6 +12,7 @@ import {
   Building,
 } from "lucide-react";
 import { Transaction } from "@/hooks/useGoldskyHistory";
+import { toast } from "sonner";
 
 interface TransactionCardProps {
   transaction: Transaction;
@@ -119,7 +120,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ transaction })
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy text: ", err);
+      toast.error("Failed to copy text: ");
     }
   };
 

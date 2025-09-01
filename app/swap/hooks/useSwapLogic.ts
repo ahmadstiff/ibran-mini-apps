@@ -28,13 +28,18 @@ export const useSwapLogic = () => {
   const [toAmount, setToAmount] = useState("");
   const [slippage, setSlippage] = useState("0.5");
   const [isMounted, setIsMounted] = useState(false);
-  const [positionAddress, setPositionAddress] = useState<string | undefined>(undefined);
+  const [positionAddress, setPositionAddress] = useState<string | undefined>(
+    undefined,
+  );
   const [positionLength, setPositionLength] = useState(0);
   const [positionsArray, setPositionsArray] = useState<any[]>([]);
   const [lpAddress, setLpAddress] = useState<any[]>([]);
   const [lpAddressSelected, setLpAddressSelected] = useState<string>("");
-  const [positionIndex, setPositionIndex] = useState<number | undefined>(undefined);
-  const [selectedCollateralToken, setSelectedCollateralToken] = useState<any>(null);
+  const [positionIndex, setPositionIndex] = useState<number | undefined>(
+    undefined,
+  );
+  const [selectedCollateralToken, setSelectedCollateralToken] =
+    useState<any>(null);
 
   // Use real API pools data
   const [pools, setPools] = useState<any[]>([]);
@@ -60,24 +65,29 @@ export const useSwapLogic = () => {
 
   const { positionBalance: fromTokenBalance } = useReadPositionBalance(
     fromTokenAddress || "",
-    addressPosition || ""
+    addressPosition || "",
   );
 
   const { positionBalance: toTokenBalance } = useReadPositionBalance(
     toTokenAddress || "",
-    addressPosition || ""
+    addressPosition || "",
   );
 
-  const { userCollateral, positionLoading, collateralLoading, positionError, collateralError } =
-    useReadUserCollateral(
-      selectedCollateralToken && selectedCollateralToken.startsWith("0x")
-        ? (selectedCollateralToken as `0x${string}`)
-        : ("0x0000000000000000000000000000000000000000" as `0x${string}`),
-      lpAddressSelected && lpAddressSelected.startsWith("0x")
-        ? (lpAddressSelected as `0x${string}`)
-        : ("0x0000000000000000000000000000000000000000" as `0x${string}`),
-      fromToken.decimals
-    );
+  const {
+    userCollateral,
+    positionLoading,
+    collateralLoading,
+    positionError,
+    collateralError,
+  } = useReadUserCollateral(
+    selectedCollateralToken && selectedCollateralToken.startsWith("0x")
+      ? (selectedCollateralToken as `0x${string}`)
+      : ("0x0000000000000000000000000000000000000000" as `0x${string}`),
+    lpAddressSelected && lpAddressSelected.startsWith("0x")
+      ? (lpAddressSelected as `0x${string}`)
+      : ("0x0000000000000000000000000000000000000000" as `0x${string}`),
+    fromToken.decimals,
+  );
 
   const {
     price: priceExchangeRate,
@@ -87,7 +97,7 @@ export const useSwapLogic = () => {
     (fromTokenAddress || "") as Address,
     (toTokenAddress || "") as Address,
     1,
-    addressPosition as Address
+    addressPosition as Address,
   );
 
   const {
@@ -98,7 +108,7 @@ export const useSwapLogic = () => {
     (fromTokenAddress || "") as Address,
     (toTokenAddress || "") as Address,
     Number(fromAmount) || 0,
-    addressPosition as Address
+    addressPosition as Address,
   );
 
   const { swapToken, isLoading, error, setError } = useSwapToken({
@@ -117,9 +127,6 @@ export const useSwapLogic = () => {
     onSuccess: () => {
       setFromAmount("");
       setToAmount("");
-    },
-    onError: (error) => {
-      console.error("Swap error:", error);
     },
     positionAddress: addressPosition as `0x${string}`,
     lendingPoolAddress: lpAddressSelected as `0x${string}`,
@@ -152,14 +159,19 @@ export const useSwapLogic = () => {
           setToAmount("");
         }
       } catch (err) {
-        console.error("Error calculating exchange rate:", err);
         setToAmount("");
       }
     } else {
       setToAmount("");
       setError("");
     }
-  }, [fromAmount, priceExchangeRate, priceExchangeRateReverse, fromToken, toToken]);
+  }, [
+    fromAmount,
+    priceExchangeRate,
+    priceExchangeRateReverse,
+    fromToken,
+    toToken,
+  ]);
 
   // Fetch pools on component mount
   useEffect(() => {
@@ -169,7 +181,6 @@ export const useSwapLogic = () => {
         const poolsData = await getPools();
         setPools(poolsData);
       } catch (error) {
-        console.error("Error fetching pools:", error);
         setPools([]);
       } finally {
         setPoolsLoading(false);
@@ -194,7 +205,6 @@ export const useSwapLogic = () => {
           setLpAddressSelected(pools[0].id);
         }
       } catch (error) {
-        console.error("Error fetching LP address:", error);
         setLpAddress([]);
       }
     };
@@ -214,7 +224,9 @@ export const useSwapLogic = () => {
     }
 
     // Fallback to tokens array
-    const token = tokens.find((token) => token.addresses[defaultChain] === address);
+    const token = tokens.find(
+      (token) => token.addresses[defaultChain] === address,
+    );
     return token?.name;
   };
 
@@ -230,7 +242,9 @@ export const useSwapLogic = () => {
     }
 
     // Fallback to tokens array
-    const token = tokens.find((token) => token.addresses[defaultChain] === address);
+    const token = tokens.find(
+      (token) => token.addresses[defaultChain] === address,
+    );
     return token?.logo;
   };
 
@@ -238,7 +252,7 @@ export const useSwapLogic = () => {
     name: string,
     tokenAddress: string,
     decimals: number,
-    tokenBalance: number
+    tokenBalance: number,
   ) => {
     const formattedBalance =
       name === tokenName(tokenAddress)
@@ -304,11 +318,7 @@ export const useSwapLogic = () => {
         },
       });
     } catch (err) {
-      console.error("Swap error:", err);
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to execute swap. Please try again.";
-
-      setError(errorMessage);
+      toast.error("Swap failed. Please try again.");
     }
   };
 
@@ -316,7 +326,10 @@ export const useSwapLogic = () => {
     if (!isMounted) return "Swap";
     if (!address) return "Connect Wallet";
     if (!areTokensValid) return "Invalid Tokens";
-    if (!addressPosition || addressPosition === "0x0000000000000000000000000000000000000000") {
+    if (
+      !addressPosition ||
+      addressPosition === "0x0000000000000000000000000000000000000000"
+    ) {
       return "Create Position First";
     }
     if (isLoading) return "Processing...";
@@ -329,7 +342,10 @@ export const useSwapLogic = () => {
       addressPosition === undefined
     ) {
       // Silent fail for no active positions
-    } else if (Number(fromAmount) > Number(fromTokenBalance) / 10 ** fromToken.decimals) {
+    } else if (
+      Number(fromAmount) >
+      Number(fromTokenBalance) / 10 ** fromToken.decimals
+    ) {
       // Silent fail for insufficient balance
     } else {
       handleSwap();

@@ -24,17 +24,6 @@ export const TokenTable: React.FC<TokenTableProps> = ({ pool }) => {
     pool?.id || "0x0000000000000000000000000000000000000000"
   );
 
-  // Debug logging for TokenTable
-  console.log("🪙 TokenTable Debug:", {
-    poolId: pool?.id,
-    poolExists: !!pool,
-    walletAddress: address,
-    isWalletConnected: isConnected,
-    addressPosition: addressPosition?.toString(),
-    isLoadingAddressPosition,
-    hasValidPosition: addressPosition && addressPosition !== "0x0000000000000000000000000000000000000000"
-  });
-
   // Get all tokens for current chain
   const chainTokens = tokens.filter(
     (token) =>

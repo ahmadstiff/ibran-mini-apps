@@ -33,50 +33,12 @@ export const useFaucet = (chainId: number = defaultChain) => {
     })
     .filter((token): token is Token & { address: `0x${string}` } => token !== null);
 
-  // Console log untuk debugging wallet connection
-  useEffect(() => {
-    console.log("🔗 [FAUCET] Wallet Status:", {
-      address: address || "Not connected",
-      chainId,
-      defaultChain,
-      isConnected: !!address
-    });
-  }, [address, chainId]);
-
-  // Console log untuk debugging token selection
-  useEffect(() => {
-    console.log("🪙 [FAUCET] Token Selection:", {
-      selectedTokenAddress,
-      amount,
-      filteredTokensCount: filteredTokens.length,
-      availableTokens: filteredTokens.map(t => ({ symbol: t.symbol, address: t.address }))
-    });
-  }, [selectedTokenAddress, amount, filteredTokens]);
-
-  // Enhanced setAmount with debugging
   const setAmountWithDebug = (newAmount: string) => {
-    console.log("💰 [FAUCET] Amount Changed:", {
-      oldAmount: amount,
-      newAmount,
-      isValid: !isNaN(parseFloat(newAmount))
-    });
     setAmount(newAmount);
   };
 
   const handleClaim = async () => {
-    console.log("🚀 [FAUCET] Claim Attempt Started:", {
-      timestamp: new Date().toISOString(),
-      address,
-      selectedTokenAddress,
-      amount,
-      chainId
-    });
-
     if (!selectedTokenAddress || !amount) {
-      console.warn("⚠️ [FAUCET] Validation Failed:", {
-        hasToken: !!selectedTokenAddress,
-        hasAmount: !!amount
-      });
       toast.error("Please select a token and enter an amount", {
         style: {
           background: "rgba(239, 68, 68, 0.1)",
@@ -91,7 +53,6 @@ export const useFaucet = (chainId: number = defaultChain) => {
     }
 
     if (!address) {
-      console.warn("⚠️ [FAUCET] Wallet Not Connected");
       toast.error("Please connect your wallet", {
         style: {
           background: "rgba(239, 68, 68, 0.1)",
@@ -122,23 +83,11 @@ export const useFaucet = (chainId: number = defaultChain) => {
     }
 
     try {
-      console.log("✅ [FAUCET] Starting Claim Process:", {
-        token: selectedToken.symbol,
-        amount,
-        userAddress: address
-      });
-
       setIsClaiming(true);
       setTxHash(undefined);
 
       const decimals = selectedToken.decimals;
       const amountBigInt = BigInt(Math.floor(parseFloat(amount) * 10 ** decimals));
-
-      console.log("🔢 [FAUCET] Amount Conversion:", {
-        originalAmount: amount,
-        decimals,
-        amountBigInt: amountBigInt.toString()
-      });
 
       const tx = await writeContractAsync({
         address: selectedTokenAddress as `0x${string}`,
@@ -148,13 +97,6 @@ export const useFaucet = (chainId: number = defaultChain) => {
       });
 
       if (tx) {
-        console.log("📝 [FAUCET] Transaction Submitted:", {
-          txHash: tx,
-          token: selectedToken.symbol,
-          amount: amount,
-          userAddress: address,
-          timestamp: new Date().toISOString()
-        });
 
         setTxHash(tx);
         toast.success("Transaction submitted. Waiting for confirmation...", {
@@ -169,15 +111,6 @@ export const useFaucet = (chainId: number = defaultChain) => {
         });
       }
     } catch (error: any) {
-      console.error("💥 [FAUCET] Claim Error:", {
-        error: error.message,
-        code: error.code,
-        token: selectedToken?.symbol,
-        amount,
-        userAddress: address,
-        timestamp: new Date().toISOString()
-      });
-
       // Don't show error for user rejection (code 4001)
       if (error.code !== 4001) {
         toast.error("Failed to submit transaction", {
@@ -190,8 +123,6 @@ export const useFaucet = (chainId: number = defaultChain) => {
             boxShadow: "0 8px 32px rgba(239, 68, 68, 0.1)",
           },
         });
-      } else {
-        console.log("👤 [FAUCET] User Rejected Transaction");
       }
       setIsClaiming(false);
     }
@@ -199,10 +130,6 @@ export const useFaucet = (chainId: number = defaultChain) => {
 
   const copyTokenAddress = () => {
     if (selectedTokenAddress) {
-      console.log("📋 [FAUCET] Token Address Copied:", {
-        tokenAddress: selectedTokenAddress,
-        timestamp: new Date().toISOString()
-      });
       navigator.clipboard.writeText(selectedTokenAddress);
       toast.success("Token address copied to clipboard", {
         style: {
@@ -221,33 +148,14 @@ export const useFaucet = (chainId: number = defaultChain) => {
     const selectedToken = filteredTokens.find((token) => token.address === selectedTokenAddress);
 
     if (selectedToken) {
-      console.log("➕ [FAUCET] Adding Token to Wallet:", {
-        token: {
-          symbol: selectedToken.symbol,
-          address: selectedToken.address,
-          decimals: selectedToken.decimals
-        },
-        timestamp: new Date().toISOString()
-      });
       await addTokenToWallet(selectedTokenAddress, selectedToken);
     }
   };
 
-  // Debug effect to track amount changes
-  useEffect(() => {}, [amount]);
 
-  // Debug effect to track claiming state
-  useEffect(() => {}, [isClaiming, isWritePending]);
 
   useEffect(() => {
     if (isSuccess && txHash) {
-      console.log("🎉 [FAUCET] Claim Success:", {
-        txHash,
-        token: filteredTokens.find(t => t.address === selectedTokenAddress)?.symbol,
-        amount,
-        userAddress: address,
-        timestamp: new Date().toISOString()
-      });
 
       toast.success(`Successfully claimed tokens!`, {
         style: {
@@ -267,21 +175,13 @@ export const useFaucet = (chainId: number = defaultChain) => {
 
     useEffect(() => {
     if (isError) {
-      console.error("❌ [FAUCET] Transaction Error:", {
-        txHash,
-        confirmError: confirmError?.message,
-        writeError: writeError?.message,
-        isUserRejection: (confirmError as any)?.code === 4001 || (writeError as any)?.code === 4001,
-        timestamp: new Date().toISOString()
-      });
 
       // Don't show error for user rejection (code 4001)
       const isUserRejection =
         (confirmError as any)?.code === 4001 || (writeError as any)?.code === 4001;
 
       if (!isUserRejection) {
-        const errorMessage = confirmError?.message || writeError?.message || "Transaction failed";
-        toast.error(`Transaction failed: ${errorMessage}`, {
+        toast.error("Claim failed", {
           style: {
             background: "rgba(239, 68, 68, 0.1)",
             backdropFilter: "blur(10px)",

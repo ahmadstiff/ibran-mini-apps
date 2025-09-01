@@ -1,7 +1,14 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { createConfig, http } from "wagmi";
 import { baseSepolia } from "viem/chains";
-export const config = getDefaultConfig({
-  appName: "My RainbowKit App",
-  projectId: "YOUR_PROJECT_ID",
+import { injected, walletConnect } from "wagmi/connectors";
+
+export const config = createConfig({
   chains: [baseSepolia],
+  connectors: [
+    injected(),
+    walletConnect({ projectId: "YOUR_PROJECT_ID" }),
+  ],
+  transports: {
+    [baseSepolia.id]: http(),
+  },
 });

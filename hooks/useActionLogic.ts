@@ -7,7 +7,7 @@ import { EnrichedPool } from "@/lib/pair-token-address";
 
 export const useActionLogic = (type: ActionType, market: EnrichedPool) => {
   const [amount, setAmount] = useState("");
-  const [toChainId, setToChainId] = useState(type === "borrow" ? "1114" : "");
+  const [toChainId, setToChainId] = useState(type === "borrow" ? "84532" : "");
   const [isApproved, setIsApproved] = useState(false);
 
   const chainId = useChainId();

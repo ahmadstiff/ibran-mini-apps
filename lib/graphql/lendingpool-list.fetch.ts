@@ -12,14 +12,11 @@ export type LendingPoolCreated = {
 export async function fetchLendingPools(): Promise<LendingPoolCreated[]> {
   try {
     const query = queryLendingPool();
-    console.log("Fetching lending pools from Goldsky API...");
-    console.log("Query:", query);
     
     const data = await graphClient.request<{ lendingPoolCreateds: LendingPoolCreated[] }>(
       query
     );
     
-    console.log("Raw API response:", data);
     
     if (!data) {
       console.warn("No data received from API");
@@ -32,8 +29,7 @@ export async function fetchLendingPools(): Promise<LendingPoolCreated[]> {
     }
     
     const pools = data.lendingPoolCreateds;
-    console.log(`Found ${pools.length} lending pools`);
-    
+
     // Validate pool data
     const validPools = pools.filter(pool => {
       if (!pool.lendingPool || !pool.borrowToken || !pool.collateralToken) {
@@ -43,12 +39,7 @@ export async function fetchLendingPools(): Promise<LendingPoolCreated[]> {
       return true;
     });
     
-    console.log(`Valid pools: ${validPools.length}`);
     
-    // Log first few pools for debugging
-    if (validPools.length > 0) {
-      console.log("Sample pool data:", validPools[0]);
-    }
     
     return validPools;
   } catch (error) {

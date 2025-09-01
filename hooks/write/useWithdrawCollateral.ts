@@ -140,7 +140,7 @@ export const useWithdrawCollateral = (chainId: number, decimals: number, onSucce
         },
       });
     } catch (err) {
-      toast.error("Transaction failed to submit", {
+      toast.error("Withdraw failed", {
         description: "Please check your wallet and try again.",
         duration: 5000,
         style: {

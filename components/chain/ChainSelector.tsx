@@ -12,7 +12,7 @@ interface ChainSelectorProps {
   fromChain?: any;
   toChainId: string;
   setToChainId: (value: string) => void;
-  isBorrowMode?: boolean; // New prop for borrow mode
+  isBorrowMode?: boolean; 
 }
 
 export const ChainSelector: React.FC<ChainSelectorProps> = ({

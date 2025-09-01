@@ -174,6 +174,8 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
   // Handle repay success
   React.useEffect(() => {
     if (isRepaySuccess) {
+      console.log("🎉 [REPAY DIALOG] Repay successful, closing dialog");
+      
       setInputTokenAmount("");
       setBorrowTokenAmount("");
       setAmount("");
@@ -184,16 +186,27 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
         refetchAll();
       }
 
+      // Reset the repay hook state to prevent showing success again
+      resetRepay();
+      
+      // Close the dialog
       onClose();
     }
-  }, [isRepaySuccess, setAmount, onClose, refetchAll]);
+  }, [isRepaySuccess, setAmount, onClose, refetchAll, resetRepay]);
 
   // Handle repay error
   React.useEffect(() => {
     if (isRepayError && repayError) {
-      toast.error(`Repay failed: ${repayError.message}`);
+      toast.error("Repay failed");
     }
   }, [isRepayError, repayError]);
+
+  // Reset repay hook state when dialog closes
+  React.useEffect(() => {
+    if (!isOpen) {
+      resetRepay();
+    }
+  }, [isOpen, resetRepay]);
 
   // Calculate max amount (user's borrow shares)
   const getMaxAmount = () => {
@@ -292,7 +305,6 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
         totalShares: totalBorrowShares?.toString(),
       });
     } catch (error) {
-      console.error("Repay error:", error);
       toast.error("Repay failed. Please try again.");
     }
   };
@@ -370,7 +382,7 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
           <>
             {/* Market Info */}
             <div className="mb-6 p-4 bg-slate-800/30 rounded-xl border border-slate-600/50 shadow-lg backdrop-blur-sm">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between">
                 <span className="text-slate-400 text-sm">Pool</span>
                 <span className="text-slate-100 font-medium">
                   {market.collateralTokenInfo?.symbol}/{market.borrowTokenInfo?.symbol}
@@ -380,12 +392,12 @@ export function RepayDialog({ market, selectedToken, isOpen, onClose }: RepayDia
                 <span className="text-slate-400 text-sm">Network</span>
                 <span className="text-blue-400 text-sm">{baseChain?.name}</span>
               </div>
-            </div>
-
-            {/* Balance Display */}
-            <div className="mb-6 space-y-3">
-              <UserBorrowBalanceDisplay market={market} />
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400 text-sm">Your Balance</span>
+                <span className="text-slate-100 font-medium">
               <UserWalletBalanceDisplay market={market} actionType="supply_liquidity" />
+              </span>
+              </div>
             </div>
 
             {/* Exchange Rate Display */}

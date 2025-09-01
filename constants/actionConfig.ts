@@ -133,6 +133,6 @@ export const actionConfig: Record<ActionType, ActionConfig> = {
     tokenSymbol: (market: EnrichedPool) =>
       market.borrowTokenInfo?.symbol ?? market.borrowToken,
     buttonText: "Borrow",
-    buttonClass: "w-full bg-purple-600 hover:bg-purple-700",
+    buttonClass: "w-full bg-blue-600 hover:bg-blue-700",
   },
 };

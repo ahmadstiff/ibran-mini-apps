@@ -25,7 +25,6 @@ const getTokenInfo = (borrowToken?: string, chainId?: number): TokenInfo | null 
   const address = token.addresses[targetChain];
 
   if (!address) {
-    console.warn(`Token ${borrowToken} not found for chain ${targetChain}`);
     return null;
   }
 
@@ -89,20 +88,12 @@ export const useRepay = (
       const tokenInfo = getTokenInfo(borrowToken, chainId);
 
       if (!tokenInfo || !lendingPoolAddress) {
-        const error = new Error("Missing token or pool address");
-        console.error("❌ Repay error:", error.message, {
-          tokenInfo,
-          lendingPoolAddress,
-          borrowToken,
-          chainId,
-        });
         setError(error);
         return;
       }
 
       if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
         const error = new Error("Invalid repay amount");
-        console.error("❌ Repay error:", error.message, { amount });
         setError(error);
         return;
       }
@@ -120,12 +111,6 @@ export const useRepay = (
 
       if (userShares === BigInt(0)) {
         const error = new Error("Calculated shares amount is zero");
-        console.error("❌ Repay error:", error.message, {
-          userAmount,
-          effectiveTotalAssets,
-          effectiveTotalShares,
-          userShares: userShares.toString(),
-        });
         setError(error);
         return;
       }
@@ -139,8 +124,6 @@ export const useRepay = (
         });
       } catch (err) {
         const error = err instanceof Error ? err : new Error("Repay failed. Please try again.");
-
-        console.error("❌ Repay transaction failed:", error.message, err);
         setError(error);
       }
     },
@@ -199,19 +182,12 @@ export const useApproveToken = (
 
       if (!tokenInfo || !spenderAddress) {
         const error = new Error("Missing token or spender address");
-        console.error("❌ Approval error:", error.message, {
-          tokenInfo,
-          spenderAddress,
-          borrowToken,
-          chainId,
-        });
         setError(error);
         return;
       }
 
       if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
         const error = new Error("Invalid approve amount");
-        console.error("❌ Approval error:", error.message, { amount });
         setError(error);
         return;
       }
@@ -232,7 +208,6 @@ export const useApproveToken = (
         });
       } catch (err) {
         const error = err instanceof Error ? err : new Error("Approval failed. Please try again.");
-        console.error("❌ Approval transaction failed:", error.message, err);
         setError(error);
       }
     },

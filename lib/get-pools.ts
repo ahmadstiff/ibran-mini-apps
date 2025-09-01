@@ -4,12 +4,9 @@ import { fetchLendingPools } from "./graphql/lendingpool-list.fetch";
 // Test function to verify API connection
 export async function testPoolsAPI() {
   try {
-    console.log("Testing Goldsky API connection...");
     const pools = await fetchLendingPools();
-    console.log("API test successful. Found pools:", pools.length);
     return pools;
   } catch (error) {
-    console.error("API test failed:", error);
     throw error;
   }
 }
@@ -26,8 +23,6 @@ export async function getPools(chainId?: number) {
       return [];
     }
 
-    console.log("Fetched pools from API:", realPools);
-
     const mappedRealPools = realPools.map((pool) => ({
       id: pool.lendingPool, // Use lendingPool as the ID
       collateralToken: pool.collateralToken,
@@ -39,7 +34,6 @@ export async function getPools(chainId?: number) {
       enrichPoolWithTokenInfo(pool, defaultChainId)
     );
 
-    console.log("Enriched pools:", enrichedPools);
     return enrichedPools;
   } catch (error) {
     console.error("Error in getPools:", error);

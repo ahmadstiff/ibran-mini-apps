@@ -41,19 +41,6 @@ export const useTokenCalculator = (
     (token) => token.addresses[defaultChain] === tokenOut,
   )?.priceFeed[defaultChain] as Address;
 
-  // Console log for exchange rate calculation details
-  console.log("🔄 Exchange Rate Calculation:", {
-    amountIn: amountIn,
-    amountInBigInt: amountInBigInt.toString(),
-    tokenIn: tokenIn,
-    tokenOut: tokenOut,
-    positionAddress: addressPosition,
-    decimalsIn: decimalsIn,
-    decimalsOut: decimalsOut,
-    tokenInPrice: tokenInPrice,
-    tokenOutPrice: tokenOutPrice,
-    chain: defaultChain
-  });
 
   const {
     data: price,
@@ -77,13 +64,6 @@ export const useTokenCalculator = (
 
   const calculatedPrice = price ? Number(price) / 10 ** (decimalsOut ?? 0) : 0;
 
-  // Console log for the calculated exchange rate result
-  console.log("💰 Exchange Rate Result:", {
-    rawPrice: price?.toString(),
-    calculatedPrice: calculatedPrice,
-    isLoading: isLoading,
-    error: error
-  });
 
   return {
     price: calculatedPrice,

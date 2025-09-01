@@ -47,7 +47,7 @@ export const useCreatePool = (onSuccess?: () => void) => {
       setIsCreating(false);
       // Don't show error for user rejection (code 4001)
       if (writeError.message && !writeError.message.includes("User rejected")) {
-        toast.error("Transaction failed", {
+        toast.error("Create pool failed", {
           description: writeError.message,
           duration: 5000,
         });

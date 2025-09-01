@@ -138,7 +138,7 @@ export const useApprove = (chainId: number, decimals: number, onSuccess?: () => 
         },
       });
     } catch (err) {
-      toast.error("Transaction failed to submit", {
+      toast.error("Approval failed", {
         description: "Please check your wallet and try again.",
         duration: 5000,
         style: {

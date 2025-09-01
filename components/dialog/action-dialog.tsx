@@ -177,7 +177,6 @@ export function ActionModalView({ type, market, onAction }: ActionModalViewProps
       // Call the base approval function (buffer already applied in amount sync)
       await handleRepayApproveBase(tokenAddress, spenderAddress);
     } catch (error) {
-      console.error("Repay approval failed:", error);
       toast.error("Repay approval failed");
     }
   };
@@ -269,14 +268,14 @@ export function ActionModalView({ type, market, onAction }: ActionModalViewProps
     isSuccess: isRepaySuccess,
   } = useRepay(market.borrowTokenInfo?.name, market.id, false, chainId, tokenDecimalsForHooks);
 
-  // Handle repay success
+  // Handle repay success - only for action dialog, not for repay dialog
   React.useEffect(() => {
-    if (isRepaySuccess) {
+    if (isRepaySuccess && type === "repay") {
       setAmount("");
       setIsApproved(false);
-      toast.success("Repay successful!");
+      // Don't show toast here as repay dialog handles its own success
     }
-  }, [isRepaySuccess, setAmount, setIsApproved]);
+  }, [isRepaySuccess, setAmount, setIsApproved, type]);
 
   // Auto-refetch txHash after successful transactions
   React.useEffect(() => {

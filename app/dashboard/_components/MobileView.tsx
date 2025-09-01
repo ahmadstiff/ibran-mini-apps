@@ -165,7 +165,7 @@ const MobileView = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="">
                           <div className="flex justify-between items-center">
                             <span className="text-gray-400 text-xs">LTV:</span>
                             <span className="text-blue-400 font-medium text-sm">

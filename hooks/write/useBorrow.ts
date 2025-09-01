@@ -10,6 +10,7 @@ import { chains } from "@/constants/chainAddress";
 import { lendingPoolAbi } from "@/lib/abis/lendingPoolAbi";
 import { useReadTotalSupplyAssets } from "@/hooks/read/useTotalSupplyAssets";
 import { useReadMaxUserBorrow } from "@/hooks/read/useReadMaxUserBorrow";
+import { useReadGasMaster } from "@/hooks/read/useReadGasMaster";
 
 export type HexAddress = `0x${string}`;
 
@@ -21,7 +22,7 @@ export const useBorrow = (
   lendingPoolAddress?: HexAddress,
 ) => {
   const { address } = useAccount();
-
+//0,000970198  0,0001
   const [amount, setAmount] = useState("");
   const [txHash, setTxHash] = useState<HexAddress | undefined>();
   const [successTxHash, setSuccessTxHash] = useState<HexAddress | undefined>();
@@ -52,6 +53,15 @@ export const useBorrow = (
       ? Number(maxUserBorrow)
       : totalSupplyAssetsParsed * 0.7;
 
+  // Get gas master for the selected chain
+  const targetChainId = selectedChainId || chainId;
+  const { gasMaster, isLoadingGasMaster } = useReadGasMaster(
+    BigInt(targetChainId),
+    amount
+      ? BigInt(Math.floor(parseFloat(amount) * 10 ** decimals))
+      : BigInt(0),
+  );
+
   const {
     writeContractAsync,
     isPending: isWritePending,
@@ -68,6 +78,13 @@ export const useBorrow = (
   // Handle successful transaction
   useEffect(() => {
     if (isSuccess && onSuccess) {
+      console.log("🎉 [BORROW] Transaction successful:", {
+        txHash,
+        userAddress: address,
+        amount,
+        timestamp: new Date().toISOString(),
+      });
+
       onSuccess();
       setIsBorrowing(false);
       setSuccessTxHash(txHash);
@@ -90,9 +107,8 @@ export const useBorrow = (
   // Handle transaction confirmation error
   useEffect(() => {
     if (isError && confirmError) {
-      toast.error("Transaction failed to confirm", {
-        description: confirmError.message || "Please try again.",
-        duration: 5000,
+
+      toast.error("Borrow failed", {
         style: {
           background: "rgba(239, 68, 68, 0.1)",
           backdropFilter: "blur(10px)",
@@ -108,6 +124,15 @@ export const useBorrow = (
   }, [isError, confirmError]);
 
   const handleBorrow = async (lendingPoolAddress: HexAddress) => {
+    console.log("🚀 [BORROW] Borrow attempt started:", {
+      userAddress: address,
+      amount,
+      chainId,
+      selectedChainId,
+      lendingPoolAddress,
+      timestamp: new Date().toISOString(),
+    });
+
     if (!address) {
       toast.error("Please connect your wallet", {
         style: {
@@ -159,7 +184,13 @@ export const useBorrow = (
     // This is just a backup validation
 
     // Validate against available borrow amount
-    if (totalSupplyAssetsLoading || isLoadingMaxUserBorrow) {
+    // Only check gas master loading if not Base Sepolia (84532)
+    const shouldCheckGasMasterLoading = targetChainId !== 84532;
+    if (
+      totalSupplyAssetsLoading ||
+      isLoadingMaxUserBorrow ||
+      (shouldCheckGasMasterLoading && isLoadingGasMaster)
+    ) {
       toast.error("Loading pool data, please try again", {
         style: {
           background: "rgba(239, 68, 68, 0.1)",
@@ -188,6 +219,18 @@ export const useBorrow = (
     }
 
     const borrowAmount = parseFloat(amount);
+
+    console.log("📊 [BORROW] Validation data:", {
+      borrowAmount,
+      maxUserBorrow: maxUserBorrow ? Number(maxUserBorrow) : null,
+      totalSupplyAssets: totalSupplyAssetsParsed,
+      maxBorrowAmount,
+      totalSupplyAssetsLoading,
+      isLoadingMaxUserBorrow,
+      isLoadingGasMaster,
+      targetChainId,
+      gasMaster: gasMaster?.toString() ?? "0",
+    });
 
     // Check if max borrow data is available
     if (maxUserBorrow !== undefined && maxUserBorrow !== null) {
@@ -237,12 +280,28 @@ export const useBorrow = (
         Math.floor(parseFloat(amount) * 10 ** decimals),
       );
 
+      console.log("📝 [BORROW] Transaction details:", {
+        amountBigInt: amountBigInt.toString(),
+        decimals,
+        targetChainId,
+        lendingPoolAddress,
+        functionName: "borrowDebt",
+        gasMaster: gasMaster?.toString() ?? "0",
+      });
+
       const tx = await writeContractAsync({
         address: lendingPoolAddress,
         abi: lendingPoolAbi,
         functionName: "borrowDebt",
         args: [amountBigInt, BigInt(targetChainId), BigInt(0)],
-        value: BigInt(0),
+        value: gasMaster ?? BigInt(0),
+      });
+
+      console.log("✅ [BORROW] Transaction submitted:", {
+        txHash: tx,
+        userAddress: address,
+        amount: borrowAmount,
+        timestamp: new Date().toISOString(),
       });
 
       setTxHash(tx as HexAddress);
@@ -259,7 +318,8 @@ export const useBorrow = (
         },
       });
     } catch (err) {
-      toast.error("Transaction failed to submit", {
+
+      toast.error("Borrow failed", {
         description: "Please check your wallet and try again.",
         duration: 5000,
         style: {
@@ -289,5 +349,7 @@ export const useBorrow = (
     isLoadingMaxUserBorrow,
     totalSupplyAssetsLoading,
     totalSupplyAssetsError,
+    isLoadingGasMaster,
+    gasMaster,
   };
 };

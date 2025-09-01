@@ -32,7 +32,7 @@ export const chains: Chain[] = [
   {
     id: 11155420,
     name: "Optimism Sepolia",
-    logo: "/chain/core-logo.png",
+    logo: "/chain/optimism-logo.svg",
     contracts: {
       lendingPool: "",
       factory: "",

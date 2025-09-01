@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "install-deps": "npm install"
   },
   "dependencies": {
@@ -37,12 +36,6 @@
     "@types/node": "^22.18.0",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
-    "eslint": "^8",
-    "eslint-config-next": "15.3.3",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "postcss": "^8",
     "prettier": "^3.5.3",
     "tailwindcss": "^3.4.1",

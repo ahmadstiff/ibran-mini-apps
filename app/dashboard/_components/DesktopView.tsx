@@ -84,7 +84,7 @@ const DesktopView = () => {
 
         {/* Pool Header dengan Selector */}
         <Card className="w-full max-w-full bg-gray-900 text-gray-100 shadow-xl border border-cyan-800">
-          <CardContent className="px-6">
+          <CardContent className="px-0 py-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <h2 className="text-xl font-bold text-white">Lending Pool</h2>
@@ -124,12 +124,12 @@ const DesktopView = () => {
 
         {/* Token Table */}
         <Card className="w-full max-w-full bg-gray-900 text-gray-100 shadow-xl border border-cyan-800">
-          <CardContent className="px-6 py-0.5">
+          <CardContent className="px-0 py-1">
             <TokenTable pool={selectedPool} />
           </CardContent>
         </Card>
 
-        <Card className="w-full max-w-full bg-gray-900 text-gray-100 shadow-xl border border-cyan-800">
+        <Card className="w-full max-w-full px-0 py-6 bg-gray-900 text-gray-100 shadow-xl border border-cyan-800">
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle className="text-2xl font-bold text-blue-400">Pool Overview</CardTitle>
@@ -146,7 +146,7 @@ const DesktopView = () => {
             </div>
           </CardHeader>
 
-          <CardContent>
+          <CardContent >
             {loading ? (
               <div className="text-center py-8 text-gray-400">Loading pools...</div>
             ) : error ? (
