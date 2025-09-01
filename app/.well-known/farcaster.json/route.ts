@@ -16,9 +16,9 @@ export async function GET() {
 
   return Response.json({
     accountAssociation: {
-      header: process.env.FARCASTER_HEADER,
+      header: "eyJmaWQiOjEzMTg0NDcsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMjMxODU5MTJiMEE3OTEyMzM3M2U3MTgyNDQ5ZjgyZjdiMDVkOTlGIn0",
       payload: "eyJkb21haW4iOiJpYnJhbi1taW5pLWFwcHMudmVyY2VsLmFwcCJ9",
-      signature: process.env.FARCASTER_SIGNATURE,
+      signature: "MHgzYTgxNWM3ZGNiZTI2YTI1MzU3ZTU4YjFiY2JkN2IzNTE4NDFjNGEyZWZjNDgzODEwZjhkNjM5MGNkM2Y5MDU5NjI3ZGVhODc5MjllNjc3MWRjMTAxODMzYWU4M2ZkNjc5NmQzMmEzZmNhYWJhYWViM2MyMzQ2MzY2YmNkMGU5MTFj",
     },
   "frame": {
     "name": "ibran-mini-apps",
