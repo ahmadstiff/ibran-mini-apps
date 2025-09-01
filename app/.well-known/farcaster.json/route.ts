@@ -21,7 +21,7 @@ export async function GET() {
       signature: process.env.FARCASTER_SIGNATURE,
     },
     frame: withValidProperties({
-      version: "1.1",
+      version: "1.01",
       name: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
       subtitle: process.env.NEXT_PUBLIC_APP_SUBTITLE,
       description: process.env.NEXT_PUBLIC_APP_DESCRIPTION,
