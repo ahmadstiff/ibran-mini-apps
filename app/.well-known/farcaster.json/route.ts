@@ -20,7 +20,7 @@ export async function GET() {
       payload: process.env.FARCASTER_PAYLOAD,
       signature: process.env.FARCASTER_SIGNATURE,
     },
-  frame: {
+  "frame": {
     "name": "ibran-mini-apps",
     "homeUrl": "https://ibran-mini-apps.vercel.app",
     "iconUrl": "https://ibran-mini-apps.vercel.app/icon.png",
@@ -31,7 +31,8 @@ export async function GET() {
     "description": "ibran",
     "splashImageUrl": "https://ibran-mini-apps.vercel.app/splash.png",
     "primaryCategory": "finance",
-    "splashBackgroundColor": "#000000"
+    "splashBackgroundColor": "#000000",
+    "noindex": true
   },
 
     baseBuilder: {
