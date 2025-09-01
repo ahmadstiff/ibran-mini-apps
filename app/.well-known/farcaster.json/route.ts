@@ -32,7 +32,7 @@ export async function GET() {
     "splashImageUrl": "https://ibran-mini-apps.vercel.app/splash.png",
     "primaryCategory": "finance",
     "splashBackgroundColor": "#000000",
-    "noindex": true
+    "noindex": false
   },
 
     baseBuilder: {
